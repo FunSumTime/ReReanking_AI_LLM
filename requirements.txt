@@ -1,0 +1,6 @@
+pip
+smolagents
+dotenv
+openai
+pandas
+numpy
