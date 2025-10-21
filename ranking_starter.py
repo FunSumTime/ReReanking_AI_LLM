@@ -20,8 +20,38 @@ df = pd.read_csv("rag_sample_queries_candidates.csv")
 
 # Ensure results are ordered by the baseline rank
 df.sort_values(["query_id", "baseline_rank"], inplace=True)
+df2 = pd.read_csv("LLM_Output3.csv")
+df2.sort_values(["LLM_Values"], inplace=True)
 
-# ---------------------------------------------------------------------
+# print(df[["query_id","baseline_score"]])
+# print(df2[["query_id","LLM_Values"]])
+
+# # print(df.columns)
+# # print(df["candidate_text"])
+# temp = df.groupby("query_id")
+# # print(temp.ngroups)    
+# # n = temp.ngroups      # number of groups
+# # print(temp.groups.keys()) 
+# # print(temp.get_group(1).head())
+
+# all_q = []
+# for qid,group in temp:
+#     temp_q = []
+#     # print(qid)
+#     for idx, row in group.iterrows():
+#         # print(row)
+#         query =  str(row["query_id"]) + " " +  str(row["query_text"] + ": \n  Canadate text: " + str(row["candidate_text"]))
+#         temp_q.append(query)
+#     # print(temp_q)
+#     all_q.append(temp_q)
+# # print(all_q)
+# for i in all_q:
+#     print(i)
+#     for l in i:
+#         # print(b)
+#         b = l.split(":")
+#         print(b)
+        # ---------------------------------------------------------------------
 # 2. Metric helpers
 # ---------------------------------------------------------------------
 def precision_at_k(labels, k):
@@ -57,12 +87,35 @@ def ndcg_at_k(labels, k):
 results = []
 K = 3
 
+LLM_Results = []
+
 for qid, group in df.groupby("query_id"):
     labels = group["gold_label"].tolist()
     p = precision_at_k(labels, K)
     r = recall_at_k(labels, K)
     n = ndcg_at_k(labels, K)
     results.append({"query_id": qid, f"precision@{K}": p, f"recall@{K}": r, f"nDCG@{K}": n})
+
+
+
+############################################
+# Comparing based off LMM_values
+############################################
+for qid, group in df2.groupby("query_id"):
+    labels = group["gold_label"].tolist()
+    p = precision_at_k(labels, K)
+    r = recall_at_k(labels, K)
+    n = ndcg_at_k(labels, K)
+    LLM_Results.append({"LLM_Values": qid, f"precision@{K}": p, f"recall@{K}": r, f"nDCG@{K}": n})
+
+for qid, group in df2.groupby("query_id"):
+    y_true = group.sort_values("baseline_rank")["gold_label"].to_numpy()
+    y_pred = group.sort_values("baseline_rank")["baseline_score"].to_numpy()
+    baseline_ndcg = ndcg_score([y_true], [y_pred])
+    y_pred_llm = group.sort_values("llm_score", ascending=False)["llm_score"].to_numpy()
+    ndcg_llm = ndcg_score([y_true], [y_pred_llm])
+    print(f"Query {qid}: baseline nDCG={baseline_ndcg:.3f}, LLM nDCG={ndcg_llm:.3f}")
+
 
 metrics = pd.DataFrame(results)
 
@@ -72,3 +125,14 @@ metrics = pd.DataFrame(results)
 print(metrics.round(3))
 print("\nAverage metrics:")
 print(metrics[[f"precision@{K}", f"recall@{K}", f"nDCG@{K}"]].mean().round(3))
+
+
+metrics2 = pd.DataFrame(LLM_Results)
+
+
+# ---------------------------------------------------------------------
+# 5. Display per-query and average metrics2
+# ---------------------------------------------------------------------
+print(metrics2.round(3))
+print("\nAverage metrics:")
+print(metrics2[[f"precision@{K}", f"recall@{K}", f"nDCG@{K}"]].mean().round(3))
