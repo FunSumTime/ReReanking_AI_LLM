@@ -1,0 +1,12 @@
+Orignial
+Average metrics:
+precision@3    0.633
+recall@3       0.842
+nDCG@3         0.873
+
+
+output
+Average metrics:
+precision@3    0.317
+recall@3       0.392
+nDCG@3         0.321

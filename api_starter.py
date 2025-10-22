@@ -16,6 +16,7 @@ import pandas as pd
 import numpy as np
 import dotenv
 import os
+import time
 import json
 g_dotenv_loaded = False
 def getenv(variable: str) -> str:
@@ -116,8 +117,8 @@ def main():
             "role": "user", 
             "content": f"""You are evaluating search results.
 
-For the query below, rate EACH candidate on a 0–1 scale (0 = not relevant, 1 = highly relevant).
-Return ONLY a minified JSON object mapping candidate_id -> score (float), e.g.: ("a": .5, "b": 1) but with braces and no ```json```
+For the query below, rate EACH candidate on a 0–100 scale (0 = not relevant, 100 = highly relevant).
+Return ONLY a minified JSON object mapping candidate_id -> score (float), e.g.: ("a": 2, "b": 59) but with braces and no ```json```
 
 <query>
 {QUERY_TEXT}
@@ -135,7 +136,8 @@ Return ONLY a minified JSON object mapping candidate_id -> score (float), e.g.: 
         for key in dictionary:
             LLM_column.append(dictionary[key])
 
-        # print(f"Model returned answer: {answer.content}")
+        print(f"Model returned answer: {answer.content}")
+        time.sleep(5)
     # print(LLM_column)
 
 ############################################

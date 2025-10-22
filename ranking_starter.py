@@ -81,6 +81,9 @@ def ndcg_at_k(labels, k):
     idcg = np.sum(ideal_gains * discounts)
     return 0.0 if idcg == 0 else dcg / idcg
 
+# def ndcg_score(one, two):
+#     labels = np.array(one)
+
 # ---------------------------------------------------------------------
 # 3. Compute metrics per query
 # ---------------------------------------------------------------------
@@ -108,13 +111,14 @@ for qid, group in df2.groupby("query_id"):
     n = ndcg_at_k(labels, K)
     LLM_Results.append({"LLM_Values": qid, f"precision@{K}": p, f"recall@{K}": r, f"nDCG@{K}": n})
 
-for qid, group in df2.groupby("query_id"):
-    y_true = group.sort_values("baseline_rank")["gold_label"].to_numpy()
-    y_pred = group.sort_values("baseline_rank")["baseline_score"].to_numpy()
-    baseline_ndcg = ndcg_score([y_true], [y_pred])
-    y_pred_llm = group.sort_values("llm_score", ascending=False)["llm_score"].to_numpy()
-    ndcg_llm = ndcg_score([y_true], [y_pred_llm])
-    print(f"Query {qid}: baseline nDCG={baseline_ndcg:.3f}, LLM nDCG={ndcg_llm:.3f}")
+# for qid, group in df2.groupby("query_id"):
+#     y_true = group.sort_values("baseline_rank")["gold_label"].to_numpy()
+#     y_pred = group.sort_values("baseline_rank")["baseline_score"].to_numpy()
+#     # baseline_ndcg = ndcg_score([y_true], [y_pred])
+#     y_pred_llm = group.sort_values("LLM_Values", ascending=False)["LLM_Values"].to_numpy()
+#     print(y_true)
+#     # ndcg_llm = ndcg_score([y_true], [y_pred_llm])
+#     # print(f"Query {qid}: baseline nDCG={baseline_ndcg:.3f}, LLM nDCG={ndcg_llm:.3f}")
 
 
 metrics = pd.DataFrame(results)
