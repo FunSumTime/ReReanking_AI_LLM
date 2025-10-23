@@ -10,7 +10,8 @@ Atributes:
 
 # Schema
 ```md
-```
+
+```sql
 CREATE TABLE boxers (
   id INTEGER PRIMARY KEY,
   first_name TEXT,
