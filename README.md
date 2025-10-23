@@ -20,3 +20,6 @@ CREATE TABLE boxers (
   losses INTEGER,
   gold INTEGER
 );
+
+```
+# REST End Points
