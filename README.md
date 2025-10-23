@@ -9,7 +9,8 @@ Atributes:
 - gold (integer)
 
 # Schema
-
+```md
+```
 CREATE TABLE boxers (
   id INTEGER PRIMARY KEY,
   first_name TEXT,
