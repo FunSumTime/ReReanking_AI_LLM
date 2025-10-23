@@ -15,4 +15,4 @@ Atributes:
 `last_name TEXT,`\
 `wins INTEGER,`\
 `losses INTEGER,`\
-`gold INTEGER);`\
+`gold INTEGER);`
