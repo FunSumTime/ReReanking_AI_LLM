@@ -8,8 +8,8 @@ Atributes:
 - losses (integer)
 - gold (integer)
 
+# Schema
 ```md
-## Schema
 
 ```sql
 CREATE TABLE boxers (
