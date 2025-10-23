@@ -1,4 +1,4 @@
- <span style="color:red">Resource</span>
+# Resource
 **Boxing**
 Atributes:
 - id (Primary key integer)
@@ -8,11 +8,15 @@ Atributes:
 - losses (integer)
 - gold (integer)
 
-# Schema
-`CREATE TABLE boxers (`\
-`id INTEGER PRIMARY KEY,`\
-`first_name TEXT,`\
-`last_name TEXT,`\
-`wins INTEGER,`\
-`losses INTEGER,`\
-`gold INTEGER);`
+```md
+## Schema
+
+```sql
+CREATE TABLE boxers (
+  id INTEGER PRIMARY KEY,
+  first_name TEXT,
+  last_name TEXT,
+  wins INTEGER,
+  losses INTEGER,
+  gold INTEGER
+);
