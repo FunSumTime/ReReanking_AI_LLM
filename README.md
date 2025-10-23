@@ -28,6 +28,6 @@ CREATE TABLE boxers (
 |-----------|-----------|-----------|
 |  Retreve Boxer Collection   |  GET   |  /boxers   |
 | Create A Boxer  | POST   | /boxers   |
-| Update A Boxer  | PUT   | /boxers/<id>   |
-| Delete A Boxer  | DELETE   | /boxers/<id>   |
+| Update A Boxer  | PUT   | /boxers/id   |
+| Delete A Boxer  | DELETE   | /boxers/id   |
 
