@@ -9,7 +9,7 @@ Atributes:
 - gold (integer)
 
 # Schema
-`<span style="color: red;">CREATE TABLE</span> boxers (
+`CREATE TABLE boxers (
 id INTEGER PRIMARY KEY,
 first_name TEXT,
 last_name TEXT,
