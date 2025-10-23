@@ -23,3 +23,11 @@ CREATE TABLE boxers (
 
 ```
 # REST End Points
+
+| Name |  Method |  Path |
+|-----------|-----------|-----------|
+|  Retreve Boxer Collection   |  GET   |  /boxers   |
+| Create A Boxer  | POST   | /boxers   |
+| Update A Boxer  | PUT   | /boxers/<id>   |
+| Delete A Boxer  | DELETE   | /boxers/<id>   |
+
